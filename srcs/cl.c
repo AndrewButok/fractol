@@ -29,7 +29,7 @@ const char *str = {
 				"		im = (2 * rp * im) + pts[id * 2 + 1];"
 				"	}"
 				"	if (it < nit[0])"
-				"		scene[id] = 0x0;"
+				"		scene[id] = it / (float)nit[0] * 0xffffff;"
 				"	else"
 				"		scene[id] = 0xffffff;"
 				"}"
@@ -41,6 +41,7 @@ t_cl	*cl_init(t_view *view, char *frac)
 	int		err;
 
 	cl = (t_cl*)malloc(sizeof(t_cl));
+
 	err = clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &(cl->device), NULL);
 	cl->context = clCreateContext(NULL, 1, &cl->device, NULL, NULL, &err);
 	cl->queue = clCreateCommandQueue(cl->context, cl->device, 0, &err);

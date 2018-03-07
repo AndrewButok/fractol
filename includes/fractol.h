@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <mlx.h>
 # include <stdbool.h>
+# include <math.h>
 # include <OpenCL/cl.h>
 # define WIN_HEIGHT	600
 # define WIN_WIDTH	800

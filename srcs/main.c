@@ -53,8 +53,8 @@ t_view	*view_init(char *frac)
 		j = -1;
 		while (++j < 800)
 		{
-			view->pts[(i*600 + j) * 2] = (j - 400)/180;
-			view->pts[(i*600 + j) * 2 + 1] = (i - 300)/180;
+			view->pts[(i*800 + j) * 2] = (j - 400)/200.0f;
+			view->pts[(i*800 + j) * 2 + 1] = (i - 300)/200.0f;
 		}
 	}
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);

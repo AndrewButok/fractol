@@ -13,14 +13,15 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 # include "libft.h"
+# include "get_next_line.h"
 # include <errno.h>
 # include <stdio.h>
 # include <mlx.h>
 # include <stdbool.h>
 # include <math.h>
 # include <OpenCL/cl.h>
-# define WIN_HEIGHT	600
-# define WIN_WIDTH	800
+# define WIN_HEIGHT	800
+# define WIN_WIDTH	1200
 
 typedef union			u_color
 {
@@ -48,8 +49,7 @@ typedef struct	s_cl
 	cl_program			program;
 	cl_kernel			kernel;
 	cl_mem				bufscr;
-	cl_mem				bufpts;
-	cl_mem 				bufit;
+	cl_mem				bufparam;
 	size_t 				works;
 
 }				t_cl;
@@ -60,8 +60,7 @@ typedef struct	s_view
 	void	*win;
 	void	*img;
 	cl_int		*scene;
-	cl_float 	*pts;
-	cl_int 		*it;
+	cl_double 	*param;
 	int		bits_per_pixel;
 	int		endian;
 	int		x;

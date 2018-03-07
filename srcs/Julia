@@ -1,0 +1,22 @@
+kernel void mandel(global int *scene, global double *param)
+				{
+					int		id = get_global_id(0);
+					double	r, im, rp, p, u;
+					double	it;
+				
+					r = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100.0) + param[4];
+                    im = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100.0) + param[5];
+                    p = (param[7] - param[2])/(param[1] * 100.0);
+                    u = (param[8] - param[3])/(param[1] * 100.0);
+					it = 0;
+					while ((r * r + im * im) < 16.0 && (it++ < param[0]))
+					{
+						rp = r;
+						r = (r * r) - (im * im) + p;
+						im = (2 * rp * im) + u;
+					}
+					if (it < param[0])
+						scene[id] = (it / (float)param[0]) * 0xffffff;
+					else
+						scene[id] = 0xffffff;
+				}

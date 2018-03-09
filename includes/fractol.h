@@ -60,7 +60,7 @@ typedef struct	s_view
 	void	*win;
 	void	*img;
 	cl_int		*scene;
-	cl_double 	*param;
+	cl_float 	*param;
 	int		bits_per_pixel;
 	int		endian;
 	int		x;
@@ -70,9 +70,9 @@ typedef struct	s_view
 
 }				t_view;
 
-t_cl			*cl_init(t_view *view, char *frac);
-void			img_pixel_put(t_view *view, int x, int y, t_color color);
-int				linear_gradient(t_point *start, t_point *end, bool ck, int i);
+void			cl_init(t_view *view, char *frac);
+void			cl_run(t_view *view);
+void			cl_read_buffer(t_view *view);
 
 
 #endif

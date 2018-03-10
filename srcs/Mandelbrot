@@ -16,7 +16,7 @@ kernel void Mandelbrot(global int *scene, global float *param)
 						im = (2 * rp * im) + u;
 					}
 					if (it < param[0])
-						scene[id] = (it / (float)param[0]) * 0xffffff;
+						scene[id] = (it / (float)param[0]) * (int)param[9];
 					else
 						scene[id] = 0xffffff;
 				}
@@ -29,8 +29,8 @@ kernel void Julia(global int *scene, global float *param)
 
 					r = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100) + param[4];
                     im = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
-                    p = (param[7] - param[2])/(param[1] * 100);
-                    u = (param[8] - param[3])/(param[1] * 100);
+                    p = (param[7] - param[2])/(100);
+                    u = (param[8] - param[3])/(100);
 					it = 0;
 					while ((r * r + im * im) < 16 && (it++ < param[0]))
 					{
@@ -39,7 +39,7 @@ kernel void Julia(global int *scene, global float *param)
 						im = (2 * rp * im) + u;
 					}
 					if (it < param[0])
-						scene[id] = (it / (float)param[0]) * 0xffffff;
+						scene[id] = (it / (float)param[0]) * (int)param[9];
 					else
 						scene[id] = 0xffffff;
 				}
@@ -62,7 +62,7 @@ kernel void Burningship(global int *scene, global float *param)
 						im = fabs((2 * rp * im) + u);
 					}
 					if (it < param[0])
-						scene[id] = ((int)((it / (float)param[0]) * 0xff))<<16;
+						scene[id] = ((int)((it / (float)param[0]) * 0xff))<<16 | ((int)((it / (float)param[0]) * 0xff))<<8;
 					else
 						scene[id] = 0x0;
 				}
@@ -108,9 +108,9 @@ kernel void Butterfly(global int *scene, global float *param)
 						im = tanh(im + u)/tanh(rp + p) * sin(u) + u +im;
 					}
 					if (it < param[0])
-						scene[id] = ((int)((it / (float)param[0]) * 0xffff))<<12;
+						scene[id] = (int)((it / (float)param[0]) * (int)param[9]);
 					else
-						scene[id] = 0xffffff;
+						scene[id] = (int)param[9];
 				}
 
 kernel void Mandelbrot3(global int *scene, global float *param)
@@ -131,9 +131,9 @@ kernel void Mandelbrot3(global int *scene, global float *param)
                         im = 3*r*r*im - 3*im*im*im + u;
 					}
 					if (it < param[0])
-						scene[id] = (it / (float)param[0]) * 0xffffff;
+						scene[id] = (it / (float)param[0]) * (int)param[9];
 					else
-						scene[id] = 0xffffff;
+						scene[id] = (int)param[9];
 				}
 
 kernel void Julia3(global int *scene, global float *param)
@@ -144,8 +144,8 @@ kernel void Julia3(global int *scene, global float *param)
 
 					r = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100) + param[4];
                     im = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
-                    p = (param[7] - param[2])/(param[1] * 100);
-                    u = (param[8] - param[3])/(param[1] * 100);
+                    p = (param[7] - param[2])/(100);
+                    u = (param[8] - param[3])/(100);
 					it = 0;
 					while ((r * r + im * im) < 16 && (it++ < param[0]))
 					{
@@ -154,7 +154,7 @@ kernel void Julia3(global int *scene, global float *param)
 						im = 3*r*r*im - 3*im*im*im + u;
 					}
 					if (it < param[0])
-						scene[id] = (it / (float)param[0]) * 0xffffff;
+						scene[id] = (it / (float)param[0]) * (int)param[9];
 					else
 						scene[id] = 0xffffff;
 				}
@@ -183,7 +183,7 @@ kernel void Newton(global int *scene, global float *param)
 
 					}
 					if (it < param[0])
-						scene[id] = ((int)((it / (float)param[0]) * 0x99))<<16 | ((int)((it / (float)param[0]) * 0xff)) +  ((int)((it / (float)param[0]) * 0xaa))<<8 ;
+						scene[id] = ((int)((it / (float)param[0]) * (int)param[9])) ;
 					else
 						scene[id] = 0xffffff;
 				}

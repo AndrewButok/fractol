@@ -42,12 +42,12 @@ static char	*get_kernel(void)
 static void	cl_kernel_init(t_view *view, char *frac)
 {
 	char	*src;
-	int	err;
+	int		err;
 
 	view->cl->bufscr = clCreateBuffer(view->cl->context, CL_MEM_READ_WRITE,
-			sizeof(cl_int) * WIN_HEIGHT * WIN_WIDTH, NULL, &err);
+			sizeof(cl_int) * (WIN_HEIGHT * WIN_WIDTH), NULL, &err);
 	view->cl->bufparam = clCreateBuffer(view->cl->context, CL_MEM_READ_WRITE,
-			sizeof(cl_float) * 9, NULL, &err);
+			sizeof(cl_float) * 10, NULL, &err);
 	src = get_kernel();
 	view->cl->program = clCreateProgramWithSource(view->cl->context, 1,
 			(const char**)&src, NULL, NULL);
@@ -56,7 +56,7 @@ static void	cl_kernel_init(t_view *view, char *frac)
 	view->cl->kernel = clCreateKernel(view->cl->program, frac, &err);
 	if (err == -46)
 	{
-		ft_putendl_fd("Fractal not found. Please check your input.",2);
+		ft_putendl_fd("Fractal not found. Please check your input.", 2);
 	}
 	clSetKernelArg(view->cl->kernel, 0, sizeof(cl_mem), &view->cl->bufscr);
 	clSetKernelArg(view->cl->kernel, 1, sizeof(cl_mem), &view->cl->bufparam);
@@ -65,12 +65,11 @@ static void	cl_kernel_init(t_view *view, char *frac)
 
 void		cl_read_buffer(t_view *view)
 {
-
-	clEnqueueWriteBuffer(view->cl->queue,view->cl->bufscr, CL_TRUE, 0,
+	clEnqueueWriteBuffer(view->cl->queue, view->cl->bufscr, CL_TRUE, 0,
 			sizeof(cl_int) * WIN_WIDTH * WIN_HEIGHT, view->scene, 0,
 			NULL, NULL);
-	clEnqueueWriteBuffer(view->cl->queue,view->cl->bufparam, CL_TRUE, 0,
-			sizeof(cl_float) * 9, view->param, 0, NULL, NULL);
+	clEnqueueWriteBuffer(view->cl->queue, view->cl->bufparam, CL_TRUE, 0,
+			sizeof(cl_float) * 10, view->param, 0, NULL, NULL);
 	clFinish(view->cl->queue);
 }
 
@@ -92,7 +91,7 @@ void		cl_init(t_view *view, char *frac)
 			NULL, NULL, NULL);
 	view->cl->queue = clCreateCommandQueue(view->cl->context,
 			view->cl->device, 0, NULL);
-	cl_kernel_init(view,frac);
+	cl_kernel_init(view, frac);
 	cl_read_buffer(view);
 	cl_run(view);
 }

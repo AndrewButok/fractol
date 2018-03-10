@@ -17,29 +17,10 @@
 # include <errno.h>
 # include <stdio.h>
 # include <mlx.h>
-# include <stdbool.h>
 # include <math.h>
 # include <OpenCL/cl.h>
 # define WIN_HEIGHT	800
 # define WIN_WIDTH	1200
-
-typedef union			u_color
-{
-	int		color;
-	struct
-	{
-		unsigned char	blue;
-		unsigned char	green;
-		unsigned char	red;
-		unsigned char	alpha;
-	}		spectrum;
-}						t_color;
-typedef struct	s_point
-{
-	int			x;
-	int			y;
-	t_color	color;
-}				t_point;
 
 typedef struct	s_cl
 {
@@ -63,6 +44,8 @@ typedef struct	s_view
 	cl_float 	*param;
 	int		bits_per_pixel;
 	int		endian;
+	int		freeze;
+	int 	is_pressed;
 	int		x;
 	int		y;
 	int		size_line;
@@ -73,6 +56,11 @@ typedef struct	s_view
 void			cl_init(t_view *view, char *frac);
 void			cl_run(t_view *view);
 void			cl_read_buffer(t_view *view);
+void			fract_redraw(t_view *view);
+int				do_mouse(int button, int x,int y, t_view *view);
+int				do_mouse_m(int x,int y, t_view *view);
+int				unpress(int key, int x, int y, t_view *view);
+int				do_keyboard(int key, t_view *view);
 
 
 #endif

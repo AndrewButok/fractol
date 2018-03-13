@@ -23,11 +23,13 @@
 #define FIVE_KEY 23
 #define SIX_KEY 22
 #define SEVEN_KEY 26
-#define EIGHT_KEY 28
 #define Q_KEY 12
 #define W_KEY 13
 #define E_KEY 14
 #define R_KEY 15
+#define T_KEY 17
+#define D_KEY 2
+#define ESC_KEY 53
 
 static cl_kernel	select_kernel(int key, t_view *view)
 {
@@ -52,9 +54,24 @@ static cl_kernel	select_kernel(int key, t_view *view)
 	else if (key == SEVEN_KEY)
 		return (clCreateKernel(view->cl->program,
 				"Mandelbrot3", NULL));
-	else if (key == EIGHT_KEY)
+	else
 		return (clCreateKernel(view->cl->program,
-				"Julia3", NULL));
+				"FabsJulia", NULL));
+}
+
+void				set_defaults(t_view *view)
+{
+	view->param[0] = 10;
+	view->param[1] = 1;
+	view->param[2] = WIN_WIDTH / 2;
+	view->param[3] = WIN_HEIGHT / 2;
+	view->param[4] = 0;
+	view->param[5] = 0;
+	view->param[6] = view->size_line;
+	view->param[7] = 400;
+	view->param[8] = 700;
+	view->param[9] = 0xffffff;
+	view->freeze = 0;
 }
 
 static void			change_kernel(int key, t_view *view)
@@ -63,6 +80,21 @@ static void			change_kernel(int key, t_view *view)
 	view->cl->kernel = select_kernel(key, view);
 	clSetKernelArg(view->cl->kernel, 0, sizeof(cl_mem), &view->cl->bufscr);
 	clSetKernelArg(view->cl->kernel, 1, sizeof(cl_mem), &view->cl->bufparam);
+	set_defaults(view);
+}
+
+static void			set_color(int key, t_view *view)
+{
+	if (key == Q_KEY)
+		view->param[9] = 0xffffff;
+	if (key == W_KEY)
+		view->param[9] = 0xff0000;
+	if (key == E_KEY)
+		view->param[9] = 0xff00;
+	if (key == R_KEY)
+		view->param[9] = 0xff;
+	if (key == T_KEY)
+		view->param[9] = 0;
 }
 
 int					do_keyboard(int key, t_view *view)
@@ -75,14 +107,11 @@ int					do_keyboard(int key, t_view *view)
 		view->param[5] += (key == DOWN_KEY ? -10 : 10) / (100 * view->param[1]);
 	if (key <= 28 && key >= 18 && key != 24 && key != 27 && key != 25)
 		change_kernel(key, view);
-	if (key == Q_KEY)
-		view->param[9] = 0xffffff;
-	if (key == W_KEY)
-		view->param[9] = 0xff0000;
-	if (key == E_KEY)
-		view->param[9] = 0xff00;
-	if (key == R_KEY)
-		view->param[9] = 0xff;
+	if (key == ESC_KEY)
+		exit_x(view);
+	if (key == D_KEY)
+		set_defaults(view);
+	set_color(key, view);
 	fract_redraw(view);
 	return (1);
 }

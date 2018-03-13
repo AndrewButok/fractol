@@ -15,13 +15,13 @@
 int		do_mouse(int button, int x, int y, t_view *view)
 {
 	if (button == 4)
-		view->param[1] /= 1.01;
+		view->param[1] /= 1.05;
 	if (button == 5)
-		view->param[1] *= 1.01;
+		view->param[1] *= 1.05;
 	if (button == 6)
-		view->param[0] += view->param[0] == 10000 ? 0 : 100;
+		view->param[0] += view->param[0] == 10000 ? 0 : 10;
 	if (button == 7)
-		view->param[0] -= view->param[0] == 100 ? 0 : 100;
+		view->param[0] -= view->param[0] == 10 ? 0 : 10;
 	if (button == 2)
 		view->freeze = view->freeze == 1 ? 0 : 1;
 	if (button == 1 || button == 5 || button == 4)
@@ -61,4 +61,6 @@ int		unpress(int key, int x, int y, t_view *view)
 	if (key == 1)
 		view->is_pressed = 0;
 	return (1);
+	x = 0;
+	y = 0;
 }

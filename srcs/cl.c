@@ -13,7 +13,7 @@
 #include "fractol.h"
 #include <fcntl.h>
 
-static char	*get_kernel(void)
+static char	*get_kernel(t_view *view)
 {
 	char	*rslt;
 	char	*a;
@@ -22,18 +22,21 @@ static char	*get_kernel(void)
 	int		e;
 
 	errno = 0;
-	fd = open("../srcs/Mandelbrot", O_RDONLY);
-	if (errno)
-		perror("CL file opening error");
+	fd = open("../srcs/kernels.cl", O_RDONLY);
 	rslt = NULL;
-	a = NULL;
 	b = NULL;
-	while ((e = get_next_line(fd, &b)) == 1)
+	while ((e = get_next_line(fd, &b)) > 0)
 	{
 		a = rslt;
 		rslt = ft_strjoin(a, b);
-		free(a);
-		free(b);
+		ft_strdel(&a);
+		ft_strdel(&b);
+	}
+	ft_strdel(&b);
+	if (e == -1)
+	{
+		perror("Kernel file error");
+		exit_x(view);
 	}
 	close(fd);
 	return (rslt);
@@ -48,7 +51,7 @@ static void	cl_kernel_init(t_view *view, char *frac)
 			sizeof(cl_int) * (WIN_HEIGHT * WIN_WIDTH), NULL, &err);
 	view->cl->bufparam = clCreateBuffer(view->cl->context, CL_MEM_READ_WRITE,
 			sizeof(cl_float) * 10, NULL, &err);
-	src = get_kernel();
+	src = get_kernel(view);
 	view->cl->program = clCreateProgramWithSource(view->cl->context, 1,
 			(const char**)&src, NULL, NULL);
 	free(src);
@@ -57,6 +60,7 @@ static void	cl_kernel_init(t_view *view, char *frac)
 	if (err == -46)
 	{
 		ft_putendl_fd("Fractal not found. Please check your input.", 2);
+		exit_x(view);
 	}
 	clSetKernelArg(view->cl->kernel, 0, sizeof(cl_mem), &view->cl->bufscr);
 	clSetKernelArg(view->cl->kernel, 1, sizeof(cl_mem), &view->cl->bufparam);

@@ -19,8 +19,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <OpenCL/cl.h>
-# define WIN_HEIGHT	600
-# define WIN_WIDTH	800
+# define WIN_HEIGHT	720
+# define WIN_WIDTH	1280
 
 typedef struct	s_cl
 {
@@ -61,6 +61,8 @@ int				do_mouse(int button, int x,int y, t_view *view);
 int				do_mouse_m(int x,int y, t_view *view);
 int				unpress(int key, int x, int y, t_view *view);
 int				do_keyboard(int key, t_view *view);
+void			set_defaults(t_view *view);
+int				exit_x(t_view *view);
 
 
 #endif

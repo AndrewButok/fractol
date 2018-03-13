@@ -6,8 +6,10 @@ int         get_color(float it, float itm, float color)
 		return ((int)(it/itm * 0xff))<<16;
 	else if (((int)color) == 0xff00)
     	return ((int)(it/itm * 0xff))<<8;
-    else
+    else if (((int)color) == 0xff)
     	return ((int)(it/itm * 0xff));
+    else
+        return ((int)(it/itm * 0xff)) | (((int)(it/itm * 0xff))<<8) | (((int)(it/itm * 0xff))<<16);
 }
 
 kernel void Mandelbrot(global int *scene, global float *param)
@@ -74,9 +76,9 @@ u = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
 		im = fabs((2 * rp * im) + u);
 	}
 	if (it < param[0])
-		scene[id] = ((int)((it / (float)param[0]) * 0xff))<<16 | ((int)((it / (float)param[0]) * 0xff))<<8;
+		scene[id] = get_color(it, param[0], param[9]);
 	else
-		scene[id] = 0x0;
+		scene[id] = 0xffffff;
 }
 
 kernel void Interstellar(global int *scene, global float *param)
@@ -145,30 +147,30 @@ kernel void Mandelbrot3(global int *scene, global float *param)
 	if (it < param[0])
 		scene[id] = get_color(it, param[0], param[9]);
 	else
-		scene[id] = (int)param[9];
+		scene[id] = 0xffffff;
 }
 
-kernel void Julia3(global int *scene, global float *param)
+kernel void FabsJulia(global int *scene, global float *param)
 {
 	int		id = get_global_id(0);
-	float	r, im, rp, p, u;
-	float	it;
+    float	r, im, rp, p, u;
+    float	it;
 
-	r = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100) + param[4];
-                im = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
-                p = (param[7] - param[2])/(100);
-                u = (param[8] - param[3])/(100);
-	it = 0;
-	while ((r * r + im * im) < 16 && (it++ < param[0]))
-	{
-		rp = r;
-		r = r*r*r - 3*r*im*im + p;
-		im = 3*r*r*im - 3*im*im*im + u;
-	}
-	if (it < param[0])
-		scene[id] = get_color(it, param[0], param[9]);
-	else
-		scene[id] = 0xffffff;
+    r = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100) + param[4];
+    im = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
+    p = (param[7] - param[2])/(100);
+    u = (param[8] - param[3])/(100);
+    it = 0;
+    while ((r * r + im * im) < 16 && (it++ < param[0]))
+    {
+    	rp = r;
+    	r = fabs(((r * r) - (im * im)) - p);
+    	im = fabs(((2 * rp * im)) - u);
+    }
+    if (it < param[0])
+    	scene[id] = get_color(it, param[0], param[9]);
+    else
+    	scene[id] = 0xffffff;
 }
 
 kernel void Newton(global int *scene, global float *param)

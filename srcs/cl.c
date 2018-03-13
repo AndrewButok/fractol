@@ -22,9 +22,9 @@ static char	*get_kernel(void)
 	int		e;
 
 	errno = 0;
-	fd = open("Mandelbrot", O_RDONLY);
+	fd = open("../srcs/Mandelbrot", O_RDONLY);
 	if (errno)
-		perror("CL file opening error:");
+		perror("CL file opening error");
 	rslt = NULL;
 	a = NULL;
 	b = NULL;

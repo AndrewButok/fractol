@@ -19,8 +19,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <OpenCL/cl.h>
-# define WIN_HEIGHT	800
-# define WIN_WIDTH	1200
+# define WIN_HEIGHT	600
+# define WIN_WIDTH	800
 
 typedef struct	s_cl
 {

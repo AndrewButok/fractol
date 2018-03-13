@@ -78,11 +78,11 @@ int					do_keyboard(int key, t_view *view)
 	if (key == Q_KEY)
 		view->param[9] = 0xffffff;
 	if (key == W_KEY)
-		view->param[9] = 0xfff000;
+		view->param[9] = 0xff0000;
 	if (key == E_KEY)
-		view->param[9] = 0xfff0;
+		view->param[9] = 0xff00;
 	if (key == R_KEY)
-		view->param[9] = 0xfff;
+		view->param[9] = 0xff;
 	fract_redraw(view);
 	return (1);
 }

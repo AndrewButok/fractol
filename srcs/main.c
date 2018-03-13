@@ -95,7 +95,7 @@ int 	main(int argc, char **argv)
 	mlx_hook(view->win, 5, 5, &unpress, view);
 	mlx_hook(view->win, 6, 0, &do_mouse_m, view);
 	mlx_hook(view->win, 2, 0, &do_keyboard, view);
-	system("afplay g.mp3&");
+	//system("afplay g.mp3&");
 	mlx_loop(view->mlx);
 	return (0);
 }

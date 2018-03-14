@@ -37,11 +37,11 @@ void			put_menu(t_view *view)
 static void		put_help(t_view *view)
 {
 	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff,
-			"Use Q W E R T to change the color");
+			"Use Q W E R T A to change the color");
 	mlx_string_put(view->mlx, view->win, 20, 40, 0xffffff,
 			"Use F or RMB to freeze mouse cursor for Julia fractals");
 	mlx_string_put(view->mlx, view->win, 20, 60, 0xffffff,
-			"Use mouse sphere to change zoom or iterations");
+			"Use mouse sphere to zoom or to change numbers iterations");
 	mlx_string_put(view->mlx, view->win, 20, 80, 0xffffff,
 			"Use D to set default parameters");
 }
@@ -49,10 +49,14 @@ static void		put_help(t_view *view)
 static void		put_iterations(t_view *view)
 {
 	char *str;
+	char *to_print;
 
 	str = ft_itoa((int)view->param[0]);
-	mlx_string_put(view->mlx, view->win, 20, 400, 0xffffff,
-			str);
+	to_print = ft_strjoin("Number of iterations: ", str);
+	ft_strdel(&str);
+	mlx_string_put(view->mlx, view->win, 20, WIN_HEIGHT / 2 + WIN_HEIGHT / 4, 0xffffff,
+			to_print);
+	ft_strdel(&to_print);
 }
 
 void			fract_redraw(t_view *view)

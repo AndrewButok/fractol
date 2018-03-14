@@ -8,6 +8,8 @@ int         get_color(float it, float itm, float color)
     	return ((int)(it/itm * 0xff))<<8;
     else if (((int)color) == 0xff)
     	return ((int)(it/itm * 0xff));
+    else if (((int)color) == 0xffff00)
+    	return (((int)(it/itm * 0xff))<<8) | (((int)(it/itm * 0xff))<<16);
     else
         return ((int)(it/itm * 0xff)) | (((int)(it/itm * 0xff))<<8) | (((int)(it/itm * 0xff))<<16);
 }
@@ -88,7 +90,7 @@ kernel void Interstellar(global int *scene, global float *param)
 	float	it;
 
 	p = ((id % (int)(param[6]/4)) - param[2])/(param[1] * 100) + param[4];
-u = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
+	u = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
 	r = 0;
 	it = 0;
 	im = 0;
@@ -99,7 +101,7 @@ u = ((id / (int)(param[6]/4)) - param[3])/(param[1] * 100) + param[5];
 		im = tan(fabs(im + u));
 	}
 	if (it < param[0])
-		scene[id] = ((int)((it / (float)param[0]) * 0xff))<<16 | ((int)((it / (float)param[0]) * 0xff))<<8;
+		scene[id] = get_color(it, param[0], param[9]);
 	else
 		scene[id] = 0xffffff;
 }
@@ -184,7 +186,7 @@ kernel void Newton(global int *scene, global float *param)
     p = r;
     u = im;
 	it = 0;
-	while ((r * r + im * im) < 1000000 && p*p + u*u > 0.000001f && (it++ < param[0]))
+	while ((r * r + im * im) < 100000000 && p*p + u*u > 0.0000000001f && (it++ < param[0]))
 	{
 		rp = r;
 		ip = im;

@@ -10,16 +10,16 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = fractol
 #	C compiler run and default error flags
 GCC = gcc -Wall -Wextra -Werror
 #	output flag for GCC compiler with preseted way to CLION project dir
 OUT = -o $(NAME)
 #	MLX flags
-MLX = -lmlx -framework OpenGL -framework AppKit
+MLX = -lmlx -framework OpenGL -framework AppKit -framework OpenCL
 #	fdf's sources
 SRCDIR = ./srcs/
-SRCFILES = main.c
+SRCFILES = cl.c fract_draw.c keyboardkeys.c mousekeys.c main.c
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 #	fdf's objects
 OBJDIR = ./objs/

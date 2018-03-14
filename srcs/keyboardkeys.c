@@ -28,6 +28,7 @@
 #define E_KEY 14
 #define R_KEY 15
 #define T_KEY 17
+#define A_KEY 0
 #define D_KEY 2
 #define ESC_KEY 53
 
@@ -70,7 +71,7 @@ void				set_defaults(t_view *view)
 	view->param[6] = view->size_line;
 	view->param[7] = 400;
 	view->param[8] = 700;
-	view->param[9] = 0xffffff;
+	view->param[9] = 0x0;
 	view->freeze = 0;
 }
 
@@ -95,6 +96,8 @@ static void			set_color(int key, t_view *view)
 		view->param[9] = 0xff;
 	if (key == T_KEY)
 		view->param[9] = 0;
+	if (key == A_KEY)
+		view->param[9] = 0xffff00;
 }
 
 int					do_keyboard(int key, t_view *view)

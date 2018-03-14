@@ -34,7 +34,7 @@ void	params_init(t_view *view)
 
 int		exit_x(t_view *view)
 {
-	system("killall afplay");
+	//system("killall afplay");
 	exit(1);
 	view = NULL;
 	return (0);
@@ -56,8 +56,6 @@ t_view	*view_init(char *frac)
 			&view->size_line, &view->endian);
 	params_init(view);
 	cl_init(view, frac);
-	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
-	mlx_destroy_image(view->mlx, view->img);
 	return (view);
 }
 
@@ -76,7 +74,7 @@ int		main(int argc, char **argv)
 	mlx_hook(view->win, 6, 0, &do_mouse_m, view);
 	mlx_hook(view->win, 2, 0, &do_keyboard, view);
 	mlx_hook(view->win, 17, 1L << 17, &exit_x, view);
-	system("afplay ../g.mp3&");
+	//system("afplay ../g.mp3&");
 	mlx_loop(view->mlx);
 	return (0);
 }

@@ -19,8 +19,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <OpenCL/cl.h>
-# define WIN_HEIGHT	720
-# define WIN_WIDTH	1280
+# define WIN_HEIGHT	600
+# define WIN_WIDTH	800
 
 typedef struct	s_cl
 {
@@ -37,19 +37,19 @@ typedef struct	s_cl
 
 typedef struct	s_view
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	cl_int		*scene;
-	cl_float 	*param;
-	int		bits_per_pixel;
-	int		endian;
-	int		freeze;
-	int 	is_pressed;
-	int		x;
-	int		y;
-	int		size_line;
-	t_cl	*cl;
+	void				*mlx;
+	void				*win;
+	void				*img;
+	cl_int				*scene;
+	cl_float			*param;
+	int					bits_per_pixel;
+	int					endian;
+	int					freeze;
+	int					is_pressed;
+	int					x;
+	int					y;
+	int					size_line;
+	t_cl				*cl;
 
 }				t_view;
 

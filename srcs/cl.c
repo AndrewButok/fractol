@@ -22,7 +22,7 @@ static char	*get_kernel(t_view *view)
 	int		e;
 
 	errno = 0;
-	fd = open("../srcs/kernels.cl", O_RDONLY);
+	fd = open("./srcs/kernels.cl", O_RDONLY);
 	rslt = NULL;
 	b = NULL;
 	while ((e = get_next_line(fd, &b)) > 0)
@@ -57,9 +57,10 @@ static void	cl_kernel_init(t_view *view, char *frac)
 	free(src);
 	clBuildProgram(view->cl->program, 1, &view->cl->device, NULL, NULL, NULL);
 	view->cl->kernel = clCreateKernel(view->cl->program, frac, &err);
-	if (err == -46)
+	if (err != 0)
 	{
-		ft_putendl_fd("Fractal not found. Please check your input.", 2);
+		ft_putendl_fd(err == -46 ? "Fractal not found. Please check your input." :
+					"Ok, you have change it. It not works. What's next?", 2);
 		exit_x(view);
 	}
 	clSetKernelArg(view->cl->kernel, 0, sizeof(cl_mem), &view->cl->bufscr);
@@ -96,6 +97,5 @@ void		cl_init(t_view *view, char *frac)
 	view->cl->queue = clCreateCommandQueue(view->cl->context,
 			view->cl->device, 0, NULL);
 	cl_kernel_init(view, frac);
-	cl_read_buffer(view);
-	cl_run(view);
+	fract_redraw(view);
 }

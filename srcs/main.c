@@ -34,7 +34,6 @@ void	params_init(t_view *view)
 
 int		exit_x(t_view *view)
 {
-	//system("killall afplay");
 	exit(1);
 	view = NULL;
 	return (0);
@@ -74,7 +73,6 @@ int		main(int argc, char **argv)
 	mlx_hook(view->win, 6, 0, &do_mouse_m, view);
 	mlx_hook(view->win, 2, 0, &do_keyboard, view);
 	mlx_hook(view->win, 17, 1L << 17, &exit_x, view);
-	//system("afplay ../g.mp3&");
 	mlx_loop(view->mlx);
 	return (0);
 }

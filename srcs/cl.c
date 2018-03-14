@@ -59,8 +59,9 @@ static void	cl_kernel_init(t_view *view, char *frac)
 	view->cl->kernel = clCreateKernel(view->cl->program, frac, &err);
 	if (err != 0)
 	{
-		ft_putendl_fd(err == -46 ? "Fractal not found. Please check your input." :
-					"Ok, you have change it. It not works. What's next?", 2);
+		ft_putendl_fd(err == -46 ?
+				"Fractal not found. Please check your input." :
+				"Ok, you have change it. It not works. What's next?", 2);
 		exit_x(view);
 	}
 	clSetKernelArg(view->cl->kernel, 0, sizeof(cl_mem), &view->cl->bufscr);

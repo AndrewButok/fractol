@@ -105,9 +105,11 @@ int					do_keyboard(int key, t_view *view)
 	if (key == F_KEY)
 		view->freeze = view->freeze == 1 ? 0 : 1;
 	if (key == LEFT_KEY || key == RIGHT_KEY)
-		view->param[4] += (key == LEFT_KEY ? 10 : -10) / (100 * view->param[1]);
+		view->param[4] += ((key == LEFT_KEY ? -50 : 50)) /
+				(2 * view->param[1] * view->param[2]);
 	if (key == DOWN_KEY || key == UP_KEY)
-		view->param[5] += (key == DOWN_KEY ? -10 : 10) / (100 * view->param[1]);
+		view->param[5] += ((key == DOWN_KEY ? -50 : 50)) /
+				(2 * view->param[1] * view->param[3]);
 	if (key <= 28 && key >= 18 && key != 24 && key != 27 && key != 25)
 		change_kernel(key, view);
 	if (key == ESC_KEY)

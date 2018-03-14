@@ -28,9 +28,9 @@ int		do_mouse(int button, int x, int y, t_view *view)
 	{
 		view->is_pressed = button == 1 ? 1 : 0;
 		view->param[4] += (x - WIN_WIDTH / 2) /
-				(2 * view->param[1] * WIN_WIDTH / 2);
+				(2 * view->param[1] * view->param[2]);
 		view->param[5] += (y - WIN_HEIGHT / 2) /
-				(2 * view->param[1] * WIN_HEIGHT / 2);
+				(2 * view->param[1] * view->param[3]);
 		view->x = x;
 		view->y = y;
 	}

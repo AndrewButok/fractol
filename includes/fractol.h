@@ -19,8 +19,8 @@
 # include <mlx.h>
 # include <math.h>
 # include <OpenCL/cl.h>
-# define WIN_HEIGHT	600
-# define WIN_WIDTH	800
+# define WIN_HEIGHT	1080
+# define WIN_WIDTH	1920
 
 typedef struct	s_cl
 {
@@ -31,7 +31,7 @@ typedef struct	s_cl
 	cl_kernel			kernel;
 	cl_mem				bufscr;
 	cl_mem				bufparam;
-	size_t 				works;
+	size_t				works;
 
 }				t_cl;
 
@@ -57,12 +57,11 @@ void			cl_init(t_view *view, char *frac);
 void			cl_run(t_view *view);
 void			cl_read_buffer(t_view *view);
 void			fract_redraw(t_view *view);
-int				do_mouse(int button, int x,int y, t_view *view);
-int				do_mouse_m(int x,int y, t_view *view);
+int				do_mouse(int button, int x, int y, t_view *view);
+int				do_mouse_m(int x, int y, t_view *view);
 int				unpress(int key, int x, int y, t_view *view);
 int				do_keyboard(int key, t_view *view);
 void			set_defaults(t_view *view);
 int				exit_x(t_view *view);
-
 
 #endif

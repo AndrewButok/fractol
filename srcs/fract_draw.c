@@ -14,35 +14,35 @@
 
 void			put_menu(t_view *view)
 {
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 20, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 10, 0xaaaa,
 			"Choose your fractal");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 40, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 30, 0xaaaa,
 			"1 - Mandelbrot");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 60, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 50, 0xaaaa,
 			"2 - Julia");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 80, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 70, 0xaaaa,
 			"3 - Newton");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 100, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 90, 0xaaaa,
 			"4 - Interstellar");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 120, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 110, 0xaaaa,
 			"5 - Burningship");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 140, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 130, 0xaaaa,
 			"6 - Butterfly");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 160, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 150, 0xaaaa,
 			"7 - Mandelbrot3");
-	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 180, 0xffffff,
+	mlx_string_put(view->mlx, view->win, WIN_WIDTH - 200, 170, 0xaaaa,
 			"8 - FabsJulia");
 }
 
 static void		put_help(t_view *view)
 {
-	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff,
+	mlx_string_put(view->mlx, view->win, 20, 10, 0xaaaa,
 			"Use Q W E R T A to change the color");
-	mlx_string_put(view->mlx, view->win, 20, 40, 0xffffff,
+	mlx_string_put(view->mlx, view->win, 20, 30, 0xaaaa,
 			"Use F or RMB to freeze mouse cursor for Julia fractals");
-	mlx_string_put(view->mlx, view->win, 20, 60, 0xffffff,
+	mlx_string_put(view->mlx, view->win, 20, 50, 0xaaaa,
 			"Use mouse sphere to zoom or to change numbers iterations");
-	mlx_string_put(view->mlx, view->win, 20, 80, 0xffffff,
+	mlx_string_put(view->mlx, view->win, 20, 70, 0xaaaa,
 			"Use D to set default parameters");
 }
 
@@ -54,8 +54,8 @@ static void		put_iterations(t_view *view)
 	str = ft_itoa((int)view->param[0]);
 	to_print = ft_strjoin("Number of iterations: ", str);
 	ft_strdel(&str);
-	mlx_string_put(view->mlx, view->win, 20, WIN_HEIGHT / 2 + WIN_HEIGHT / 4, 0xffffff,
-			to_print);
+	mlx_string_put(view->mlx, view->win, 20,
+			WIN_HEIGHT - 30, 0xaaaa, to_print);
 	ft_strdel(&to_print);
 }
 
